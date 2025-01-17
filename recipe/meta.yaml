@@ -6,20 +6,20 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/inline_model_metrics-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/inline_model_metrics-{{ version }}.tar.gz
   sha256: f979bf1d1ccef43fe2127ef4e338db1178da02af752edb15836795b6bbf2fed7
 
 build:
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
   noarch: python
 
 requirements:
   host:
-    - python >=3.6,<3.10
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.6,<3.10
+    - python >={{ python_min }},<3.10
     - metoffice-afterburner
     - iris
     - netcdf4
@@ -27,6 +27,8 @@ requirements:
     - tempest-helper
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - inline_model_metrics
 
